@@ -72,7 +72,7 @@ class Talent (db.Model):
         return talents
  
 '''
-Comment model . Defining our comments' table . Linking comments table with articles, table . 
+Comment model . Defining our comments' table . Linking comments table with talents, table . 
 '''
 class Comment (db.Model):
     __tablename__ = 'comments'
