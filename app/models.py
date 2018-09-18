@@ -89,3 +89,34 @@ class Comment (db.Model):
     def delete_comment(self):
         db.session.delete(self)
         db.session.commit()
+
+class Role(db.Model):
+    __tablename__ = 'roles'
+
+    id = db.Column(db.Integer,primary_key = True)
+    name = db.Column(db.String(255))
+    users = db.relationship('User',backref = 'role',lazy="dynamic") 
+
+    def __repr__(self):
+        return f'User {self.name}'  
+
+
+class TalentCategory(db.Model):
+    '''
+    Function that defines different categories of talents
+    '''
+    __tablename__ ='talent_categories'
+
+
+    id = db.Column(db.Integer, primary_key=True)
+    name_of_category = db.Column(db.String(255))
+    category_description = db.Column(db.String(255))
+
+
+@classmethod
+def get_categories(cls):
+        '''
+        This function fetches all the categories from the database
+        '''
+        categories = TalentCategory.query.all()
+        return categories
