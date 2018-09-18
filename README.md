@@ -1,8 +1,6 @@
-# koyoo maxwel
-
-
 # Authors
 Bryan Juma
+koyoo maxwel
 
-#USER SPECIFICATIONS
+# USER SPECIFICATIONS
 success and molarity are strange bedfellows
