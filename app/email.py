@@ -1,6 +1,6 @@
 from flask import render_template
 from flask_mail import Message
-from . import mail 
+from . import email 
 
 '''
 Function for sending email 
