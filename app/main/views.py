@@ -5,7 +5,7 @@ from ..models import Comment, Talent, User
 from flask_login import login_required, current_user
 from .. import db,photos
 
-import markdown2
+# import markdown2
 
 
 
@@ -17,7 +17,7 @@ def index():
     title = 'Home - Welcome to The best talenting Website Online'
 
     search_talent = request.args.get('talent_query')
-    talents= talent.get_all_talents()  
+    talents= Talent.fetch_videos()  
 
     return render_template('index.html', title = title, talents= talents)
 
@@ -30,7 +30,7 @@ def sports():
     '''
     talents= talent.get_all_talents()
     title = 'Home - Welcome to The best talent showcasing  Website Online'  
-    return render_templates'posta.html', title = title, talents= talents )
+    return render_template('posts.html', title = title, talents= talents )
 
 @main.route('/music/talents/')
 def music():
@@ -94,7 +94,7 @@ def new_talent():
     '''
     Function that enables one to post new talents
     '''
-    form = talentForm()
+    form = TalentForm()
 
 
     if category is None:
@@ -115,7 +115,7 @@ def category(id):
     '''
     function that returns talents based on the entered category id
     '''
-    category = talentCategory.query.get(id)
+    category = Category.query.get(id)
 
     if category is None:
         abort(404)
@@ -190,6 +190,6 @@ def test(id):
     this is route for basic testing
     '''
     talent =talent.query.filter_by(id=1).first()
-    return render_template('post.html',talent= talent)
+    return render_template('posts.html',talent= talent)
 
 

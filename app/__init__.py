@@ -44,9 +44,7 @@ def create_app(config_name):
 
     # Registering auth blueprint
     from .auth import auth as auth_blueprint
-    app.register_blueprint(auth_blueprint,url_prefix='/authenticate') 
-
-    app.config['SECRET_KEY'] =  'bxxfcxa43xf7xd9xc6xefxf8c'
+    app.register_blueprint(auth_blueprint,url_prefix='/authenticate')
 
 
     return app
