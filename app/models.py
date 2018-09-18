@@ -14,7 +14,7 @@ class User(UserMixin , db.Model):
     bio = db.Column(db.String(255))
     profile_pic_path = db.Column(db.String())
 
-    vlogs = db.relationship('Pitch',backref = 'user',lazy="dynamic")
+    vlogs = db.relationship('Talent',backref = 'user',lazy="dynamic")
     
 
     def __repr__(self):
@@ -60,8 +60,8 @@ class Talent (db.Model):
         db.session.commit()
 
     @classmethod
-    def fetch_videos(cls,id):
-        talents = Talent.query.filter_by(id = id).all()
+    def fetch_videos(cls):
+        talents = Talent.query.all()
 
         return talents
 
