@@ -8,7 +8,11 @@ alias deactivate 'test $?_OLD_VIRTUAL_PATH != 0 && setenv PATH "$_OLD_VIRTUAL_PA
 # Unset irrelevant variables.
 deactivate nondestructive
 
+<<<<<<< HEAD
 setenv VIRTUAL_ENV "/home/vicklyne/Talanta/TALANTA/virtual"
+=======
+setenv VIRTUAL_ENV "/home/mutinda/Documents/python/Flask/TALANTA/virtual"
+>>>>>>> 52326021ff8133065f83937677cac4c319fb6f81
 
 set _OLD_VIRTUAL_PATH="$PATH"
 setenv PATH "$VIRTUAL_ENV/bin:$PATH"
