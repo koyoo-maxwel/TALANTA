@@ -2,11 +2,12 @@
 
 ## Authors
 
-**[Jeff musa](https://github.com/jeffmusa)**
-**[vonmutinda](https://github.com/vonmutinda)**
-**[koyoo maxwel](https://github.com/koyoo-maxwel)**
-**[Brian juma](https://github.com/alampulo)**
-**[Dancan Arani](https://github.com/DuncanArani)**
+[Jeff musa](https://github.com/jeffmusa)
+
+[vonmutinda](https://github.com/vonmutinda)
+[koyoo maxwel](https://github.com/koyoo-maxwel)
+[Brian juma](https://github.com/alampulo)
+[Dancan Arani](https://github.com/DuncanArani)
 
 ## Description
 
