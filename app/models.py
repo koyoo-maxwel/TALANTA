@@ -51,6 +51,7 @@ class Talent (db.Model):
     title = db.Column(db.String)
     talent_video_path = db.Column(db.String())
     posted = db.Column(db.DateTime,index=True,default=datetime.utcnow)
+    description =  db.Column(db.String)
     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
 
     category = db.Column(db.String)

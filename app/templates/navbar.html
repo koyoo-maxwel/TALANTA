@@ -24,7 +24,7 @@
                 <ul class="navbar-nav mr-auto">
                     {% if current_user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{url_for('main.new_talent',username = current_user.username)}}">
+                        <a class="nav-link" href="{{url_for('main.new_talent',username=current_user.username)}}">
                             Showcase Talent + <i style="font-size:24px;color:white" class="fa fa-envira"></i>
                         </a>
                     </li>

@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField,TextAreaField,SubmitField, SelectField , ValidationError 
+from wtforms import StringField,TextAreaField,SubmitField, SelectField ,ValidationError ,FileField 
 from wtforms.validators import Required
 
 class CommentsForm(FlaskForm):
@@ -11,6 +11,8 @@ class UpdateProfile(FlaskForm):
     submit = SubmitField('Update') 
 
 class TalentForm(FlaskForm):
+    title = StringField('Title',validators = [Required()])
     category = SelectField('Category', choices=[('Music','Music'),('Art & Craft','Art & Craft'),('Sports','Sports'),('Creativity','Creativity'),('other','other')])
-    content = TextAreaField('Description')
+    description = TextAreaField('Description')
+    image_file = FileField('Upload Video',validators = [Required()])
     submit = SubmitField('Talanta')
