@@ -10,6 +10,8 @@ class User(UserMixin , db.Model):
     id = db.Column(db.Integer,primary_key = True)
     username = db.Column(db.String(255))
     email = db.Column(db.String(255) , unique = True , index = True )
+    phone_number = db.Column(db.string(20))
+    sex = db.Column (db.string)
     pass_secure = db.Column(db.String(255))
     bio = db.Column(db.String(255))
     profile_pic_path = db.Column(db.String())
@@ -32,6 +34,10 @@ class User(UserMixin , db.Model):
         return check_password_hash(self.pass_secure,password)
 
 
+@login_manager.user_loader 
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
 
 '''
 Talent model . Defines our talents' table . Creates a relationship between the table and our users table . 
@@ -47,7 +53,7 @@ class Talent (db.Model):
     posted = db.Column(db.DateTime,index=True,default=datetime.utcnow)
     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
 
-    category = db.relationship('TalentCategory',backref = 'talent',lazy="dynamic")
+    category = db.Column(db.String)
     comments = db.relationship('Comment',backref = 'talent',lazy="dynamic")
 
     def save_article(self):
@@ -90,23 +96,25 @@ class Comment (db.Model):
         db.session.delete(self)
         db.session.commit()
 
-class TalentCategory(db.Model):
-    '''
-    Function that defines different categories of talents
-    '''
-    __tablename__ ='categories'
 
 
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(255))
-    category_description = db.Column(db.String(255))
-    talent_id =  db.Column(db.Integer,db.ForeignKey("talents.id"))
+# class TalentCategory(db.Model):
+#     '''
+#     Function that defines different categories of talents
+#     '''
+#     __tablename__ ='categories'
 
 
-    @classmethod
-    def get_categories(cls):
-            '''
-            This function fetches all the categories from the database
-            '''
-            categories = TalentCategory.query.all()
-            return categories
+#     id = db.Column(db.Integer, primary_key=True)
+#     name = db.Column(db.String(255))
+#     category_description = db.Column(db.String(255))
+#     talent_id =  db.Column(db.Integer,db.ForeignKey("talents.id"))
+
+
+    # @classmethod
+    # def get_categories(cls):
+    #         '''
+    #         This function fetches all the categories from the database
+    #         '''
+    #         categories = TalentCategory.query.all()
+    #         return categories
