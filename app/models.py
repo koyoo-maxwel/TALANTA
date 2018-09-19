@@ -46,8 +46,8 @@ class Talent (db.Model):
     talent_video_path = db.Column(db.String())
     posted = db.Column(db.DateTime,index=True,default=datetime.utcnow)
     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
-    category = db.Column(db.String)
-    
+
+    category = db.relationship('TalentCategory',backref = 'talent',lazy="dynamic")
     comments = db.relationship('Comment',backref = 'talent',lazy="dynamic")
 
     def save_article(self):
@@ -90,33 +90,23 @@ class Comment (db.Model):
         db.session.delete(self)
         db.session.commit()
 
-class Role(db.Model):
-    __tablename__ = 'roles'
-
-    id = db.Column(db.Integer,primary_key = True)
-    name = db.Column(db.String(255))
-    users = db.relationship('User',backref = 'role',lazy="dynamic") 
-
-    def __repr__(self):
-        return f'User {self.name}'  
-
-
 class TalentCategory(db.Model):
     '''
     Function that defines different categories of talents
     '''
-    __tablename__ ='talent_categories'
+    __tablename__ ='categories'
 
 
     id = db.Column(db.Integer, primary_key=True)
-    name_of_category = db.Column(db.String(255))
+    name = db.Column(db.String(255))
     category_description = db.Column(db.String(255))
+    talent_id =  db.Column(db.Integer,db.ForeignKey("talents.id"))
 
 
-@classmethod
-def get_categories(cls):
-        '''
-        This function fetches all the categories from the database
-        '''
-        categories = TalentCategory.query.all()
-        return categories
+    @classmethod
+    def get_categories(cls):
+            '''
+            This function fetches all the categories from the database
+            '''
+            categories = TalentCategory.query.all()
+            return categories
