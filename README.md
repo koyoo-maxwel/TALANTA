@@ -1,5 +1,6 @@
 # [TALANTA](https://github.com/vonmutinda/TALANTA.git)
-## Authors 
+
+## Authors
 
 >[Jeff musa](https://github.com/jeffmusa)
 >[vonmutinda](https://github.com/vonmutinda)
@@ -9,18 +10,16 @@
 ## Description
 
 Talata is an online platform that gives people  an opportunity to showcase their
- talents and meet mentors online to facilitate their ability.
+talents and meet mentors online to facilitate their ability.
 It not only gives mentorship programmes but also help the users reach out to the their financial needs by linking them with different people who are willing and able to offer such support to them.
 
 ### 19th/09/2018
 
-
 ## Specifications
+
 Get the specs [here](https://github.com/)
 
-
 ## Set-up and Installation
-
 
 ### Prerequiites
 
