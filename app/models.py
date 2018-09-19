@@ -10,6 +10,8 @@ class User(UserMixin , db.Model):
     id = db.Column(db.Integer,primary_key = True)
     username = db.Column(db.String(255))
     email = db.Column(db.String(255) , unique = True , index = True )
+    phone_number = db.Column(db.string(20))
+    sex = db.Column (db.string)
     pass_secure = db.Column(db.String(255))
     bio = db.Column(db.String(255))
     profile_pic_path = db.Column(db.String())
