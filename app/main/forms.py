@@ -14,5 +14,5 @@ class TalentForm(FlaskForm):
     title = StringField('Title',validators = [Required()])
     category = SelectField('Category', choices=[('Music','Music'),('Art & Craft','Art & Craft'),('Sports','Sports'),('Creativity','Creativity'),('other','other')])
     description = TextAreaField('Description')
-    image_file = FileField('Upload Video',validators = [Required()])
+    video_file = FileField('Upload Video',validators = [Required()])
     submit = SubmitField('Talanta')

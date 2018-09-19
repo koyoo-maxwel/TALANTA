@@ -1,12 +1,12 @@
 import os
+import app
 from flask import render_template, request, redirect, url_for, abort  
 from . import main  
 from .forms import CommentsForm, UpdateProfile, TalentForm
 from ..models import Comment, Talent, User 
 from flask_login import login_required, current_user
 from .. import db , videos ,photos
-
-# import markdown2
+from config import config_options , Config
 
 
 
@@ -120,13 +120,14 @@ def new_talent(username):
         category= form.category.data
         description = form.description.data
 
-        if 'video' in request.files:
-            filename = videos.save(request.files['video'])
-            path = f'videos/{filename}'
+        file = form.video_file.data.filename
+        path = f'{app.Config.UPLOADED_VIDEOS_DEST}{form.video_file.data.filename}'
+        form.video_file.data.save(os.path.join(app.Config.UPLOADED_VIDEOS_DEST, file))
 
-            new_talent= Talent(category= category,title=title,talent_video_path=path, description =description, user=current_user.username)
 
-            new_talent.save_talent()
+        new_talent= Talent(category= category,title=title,talent_video_path=path, description =description, user=current_user)
+
+        new_talent.save_talent()
 
         return redirect(url_for('main.profile',username=username))
 
@@ -139,12 +140,13 @@ def new_talent(username):
 def profile(username):
 
     user = User.query.filter_by(username = username).first()
-    talents = Talent.query.filter_by(user=username).first()
+    # talents = Talent.query.filter_by(user=username).all()
+    talents = User.vlogs
 
     if user is None:
         abort(404)
 
-    return render_template("profile/profile.html", user = user , talents = talents)
+    return render_template("profile/profile.html" , talents =talents)
 
 @main.route('/user/<username>/update/pic',methods= ['POST'])
 @login_required
