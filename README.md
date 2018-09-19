@@ -18,7 +18,7 @@ It not only gives mentorship programmes but also help the users reach out to the
 
 ## Specifications
 
-Get the specs [here](https://github.com/)
+Get the specs [here](https://github.com/koyoo-maxwel/TALANTA/blob/master/specs.md)
 
 ## Set-up and Installation
 
