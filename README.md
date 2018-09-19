@@ -6,6 +6,8 @@
 >[vonmutinda](https://github.com/vonmutinda)
 >[koyoo maxwel](https://github.com/koyoo-maxwel)
 >[Brian juma](https://github.com/alampulo)
+>[Dancan Arani](https://github.com/DuncanArani)
+
 
 ## Description
 
