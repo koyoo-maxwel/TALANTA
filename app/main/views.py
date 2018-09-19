@@ -1,12 +1,12 @@
 import os
+import app
 from flask import render_template, request, redirect, url_for, abort  
 from . import main  
-from .forms import CommentsForm, UpdateProfile, TalentForm,UploadForm
+from .forms import CommentsForm, UpdateProfile, TalentForm
 from ..models import Comment, Talent, User 
 from flask_login import login_required, current_user
-from .. import db , videos
-
-# import markdown2
+from .. import db , videos ,photos
+from config import config_options , Config
 
 
 
@@ -17,7 +17,9 @@ def index():
     '''
     title = 'Talanta - Show Case Talent !'
 
-    # search_talent = request.args.get('talent_query')
+    search_talent = request.args.get('talent_query')
+
+
     talents= Talent.fetch_videos()  
 
     return render_template('index.html', title = title, talents= talents)
@@ -100,52 +102,53 @@ def search(talent_name):
 
 
 
-@main.route('/talent/new/', methods = ['GET','POST'])
+@main.route('/talanta/<username>/new/', methods = ['GET','POST'])
 @login_required
-def new_talent():
+def new_talent(username):
     '''
     Function that enables one to post new talents
     '''
+    user = User.query.filter_by(username = username).first()
     form = TalentForm()
 
 
-    if category is None:
+    if user is None:
         abort( 404 )
 
     if form.validate_on_submit():
-        talent= form.content.data
-        category_id = form.category_id.data
-        new_talent= talent(talent= talent, category_id= category_id)
+        title = form.title.data
+        category= form.category.data
+        description = form.description.data
+
+        file = form.video_file.data.filename
+        path = f'{app.Config.UPLOADED_VIDEOS_DEST}{form.video_file.data.filename}'
+        form.video_file.data.save(os.path.join(app.Config.UPLOADED_VIDEOS_DEST, file))
+
+
+        new_talent= Talent(category= category,title=title,talent_video_path=path, description =description, user=current_user)
 
         new_talent.save_talent()
-        return redirect(url_for('main.index'))
 
-    return render_template('new_talent.html', new_talent_form= form, category= category)
+        return redirect(url_for('main.profile',username=username))
 
-@main.route('/category/<int:id>')
-def category(id):
-    '''
-    function that returns talents based on the entered category id
-    '''
-    category = Category.query.get(id)
+    return render_template('new_video.html',user=user, form=form)
 
-    if category is None:
-        abort(404)
 
-    talents_in_category = Talents.get_talent(id)
-    return render_template('category.html' ,category= category, talents= talents_in_category)
 
 
 @main.route('/user/<username>')
 def profile(username):
+
     user = User.query.filter_by(username = username).first()
+    # talents = Talent.query.filter_by(user=username).all()
+    talents = User.vlogs
 
     if user is None:
         abort(404)
 
-    return render_template("profile/profile.html", user = user)
+    return render_template("profile/profile.html" , talents =talents)
 
-@main.route('/user/<uname>/update/pic',methods= ['POST'])
+@main.route('/user/<username>/update/pic',methods= ['POST'])
 @login_required
 def update_pic(uname):
     user = User.query.filter_by(username = uname).first()
@@ -156,6 +159,27 @@ def update_pic(uname):
         db.session.commit()
     return redirect(url_for('main.profile',uname=uname))
 
+'''
+This route will be taken whenever uploading a new video to the db
+'''
+# @main.route('/talanta/<username>/new/video',methods= ['POST'])
+# @login_required
+# def upload_video(username):
+#     talanta = Talent.query.filter_by(user = username).first()
+
+
+#     image = 'uploads/' + form.image_file.data.filename
+#     form.image_file.data.save(os.path.join(app.static_folder, image))
+
+
+#     if 'video' in request.files:
+#         filename = videos.save(request.files['video'])
+#         path = f'videos/{filename}'
+#         talanta.talent_video_path = path 
+#         db.session.commit()
+
+
+#     return redirect(url_for('main.profile',username = username))
 
 
 @main.route('/user/<uname>/update',methods = ['GET','POST'])

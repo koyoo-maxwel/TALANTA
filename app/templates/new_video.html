@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-1"></div>
+
+        <div class="col-md-10">
+            <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    uploaded video will appear here
+                </div>
+
+                <div class="col-md-6">
+                        {% if user == current_user %}
+                        {{ wtf.quick_form(form) }}
+                    {% endif %}
+                </div>
+                
+            </div>
+        </div>
+
+
+
+        <div class="col-md-1"></div>
+    </div>
+</div>
+{% endblock %}

@@ -2,7 +2,8 @@ import os
 
 class Config():
     SECRET_KEY = os.environ.get('SECRET_KEY')
-    UPLOADED_VIDEOS_DEST = 'app/static/videos'
+    UPLOADED_VIDEOS_DEST = 'app/static/videos/'
+    UPLOADED_PHOTOS_DEST = 'app/static/photos'
 
     #  email configurations
     MAIL_SERVER = 'smtp.googlemail.com'
