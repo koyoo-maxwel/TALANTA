@@ -3,7 +3,7 @@ from . import main
 from .forms import CommentsForm, UpdateProfile, TalentForm, UpvoteForm
 from ..models import Comment, Talent, User 
 from flask_login import login_required, current_user
-from .. import db,photos
+from .. import db
 
 # import markdown2
 

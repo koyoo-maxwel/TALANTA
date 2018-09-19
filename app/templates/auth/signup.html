@@ -2,14 +2,15 @@
 {% import 'bootstrap/wtf.html' as wtf%}
 
 {% block body %}
-<div class="container">
+<div class="container-fluid">
     <div class="row">
         <div class="col-md-2"></div>
 
-        <div class="col-md-8">     
+        <div class="col-md-8">  
+            <hr>   
             <div class="list-group">
                 <a href="#" class="list-group-item list-group-item-action active">
-                    create an account
+                    Create an Account
                 </a>
                 {{wtf.quick_form(registration_form)}}
             </div>
