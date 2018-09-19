@@ -2,15 +2,15 @@
 
 ## Authors
 
-[Jeff musa](https://github.com/jeffmusa)
+[Jeff musa](https://github.com/jeffmusa/TALANTA)
 
-[vonmutinda](https://github.com/vonmutinda)
+[vonmutinda](https://github.com/vonmutinda/TALANTA)
 
-[koyoo maxwel](https://github.com/koyoo-maxwel)
+[koyoo maxwel](https://github.com/koyoo-maxwel/TALANTA)
 
-[Brian juma](https://github.com/alampulo)
+[Brian juma](https://github.com/alampulo/TALANTA)
 
-[Dancan Arani](https://github.com/DuncanArani)
+[Dancan Arani](https://github.com/DuncanArani/TALANTA)
 
 ## Description
 
