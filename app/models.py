@@ -32,6 +32,10 @@ class User(UserMixin , db.Model):
         return check_password_hash(self.pass_secure,password)
 
 
+@login_manager.user_loader 
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
 
 '''
 Talent model . Defines our talents' table . Creates a relationship between the table and our users table . 
@@ -89,6 +93,8 @@ class Comment (db.Model):
     def delete_comment(self):
         db.session.delete(self)
         db.session.commit()
+
+
 
 class TalentCategory(db.Model):
     '''

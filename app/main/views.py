@@ -1,9 +1,10 @@
+import os
 from flask import render_template, request, redirect, url_for, abort  
 from . import main  
-from .forms import CommentsForm, UpdateProfile, TalentForm, UpvoteForm
+from .forms import CommentsForm, UpdateProfile, TalentForm,UploadForm
 from ..models import Comment, Talent, User 
 from flask_login import login_required, current_user
-from .. import db
+from .. import db , videos
 
 # import markdown2
 
@@ -14,9 +15,9 @@ def index():
     '''
     View root page function that returns the index page and its data
     '''
-    title = 'Home - Welcome to The best talenting Website Online'
+    title = 'Talanta - Show Case Talent !'
 
-    search_talent = request.args.get('talent_query')
+    # search_talent = request.args.get('talent_query')
     talents= Talent.fetch_videos()  
 
     return render_template('index.html', title = title, talents= talents)
@@ -32,6 +33,8 @@ def sports():
     title = 'Home - Welcome to The best talent showcasing  Website Online'  
     return render_template('posts.html', title = title, talents= talents )
 
+
+
 @main.route('/music/talents/')
 def music():
     '''
@@ -42,6 +45,8 @@ def music():
     talents= talent.get_all_talents()
 
     return render_template('posts.html', title = title, talents= talents )
+
+
 
 @main.route('/entertainment/talents/')
 def entertainment():
@@ -66,27 +71,34 @@ def others():
  
 #  end of category root functions
 
+
+
 @main.route('/talent/<int:talent_id>')
 def talent(talent_id):
 
     '''
     View talent page function that returns the talent details page and its data
     '''
-    found_talent= get_talent(talent_id)
+    found_talent= Talent.get_talent(talent_id)
     title = talent_id
     talent_comments = Comment.get_comments(talent_id)
 
     return render_template('posts.html',title= title ,found_talent= found_talent, talent_comments= talent_comments)
 
+'''
+A route to videos searched from the database
+'''
 @main.route('/search/<talent_name>')
 def search(talent_name):
     '''
     View function to display the search results
     '''
-    searched_talents = search_talent(talent_name)
+    searched_talents = Talent.search_talent(talent_name)
     title = f'search results for {talent_name}'
 
     return render_template('posts.html',talents = searched_talents)
+
+
 
 @main.route('/talent/new/', methods = ['GET','POST'])
 @login_required
@@ -120,7 +132,7 @@ def category(id):
     if category is None:
         abort(404)
 
-    talents_in_category = talents.get_talent(id)
+    talents_in_category = Talents.get_talent(id)
     return render_template('category.html' ,category= category, talents= talents_in_category)
 
 @main.route('/talent/comments/new/<int:id>',methods = ['GET','POST'])
@@ -181,15 +193,3 @@ def view_comments(id):
     '''
     comments = Comment.get_comments(id)
     return render_template('posts.html',comments = comments, id=id)
-
-
-
-@main.route('/test/<int:id>')  
-def test(id):
-    '''
-    this is route for basic testing
-    '''
-    talent =talent.query.filter_by(id=1).first()
-    return render_template('posts.html',talent= talent)
-
-

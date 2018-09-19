@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField,TextAreaField,SubmitField, SelectField, RadioField
+from wtforms import StringField,TextAreaField,SubmitField, SelectField, RadioField , ValidationError , FileField
 from wtforms.validators import Required
+import imghdr
 
 class CommentsForm(FlaskForm):
     comment = TextAreaField('Comment', validators=[Required()])
@@ -16,9 +17,13 @@ class TalentForm(FlaskForm):
     content = TextAreaField('YOUR TALENT')
     submit = SubmitField('Post Your Talent')
 
-class UpvoteForm(FlaskForm):
-    '''
-    Class to create a wtf form for upvoting a talent
-    '''
-    submit = SubmitField('Upvote')
-    
+
+class UploadForm(FlaskForm):
+    image_file = FileField('Image file')
+    submit = SubmitField('Submit')
+
+    def validate_image_file(self, field):
+        if field.data.filename[-4:].lower() != '.jpg':
+            raise ValidationError('Invalid file extension')
+        if imghdr.what(field.data) != 'jpeg':
+            raise ValidationError('Invalid image format')
