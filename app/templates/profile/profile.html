@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% import 'macros.html' as macro %}
 
 {% block body %}
 <div class="container-fluid">
@@ -60,12 +61,12 @@
         </div>
 
         <div class="col-md-4">
-            <div class="row">
-                <div class="col-md-4"></div>
-                <div class="col-md-4"></div>
-                <div class="col-md-4"></div>
+            <h2> {{ current_user.username }}'s videos </h2>
+            <hr <div class="row">
+                {{ macro.displayVideos(talents) }}
             </div>
         </div>
     </div>
+</div>
 </div>
 {% endblock %}

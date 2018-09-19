@@ -138,10 +138,10 @@ def new_talent(username):
 
 @main.route('/user/<username>')
 def profile(username):
-
+    the_user = current_user.id
     user = User.query.filter_by(username = username).first()
-    # talents = Talent.query.filter_by(user=username).all()
-    talents = User.vlogs
+    talents = Talent.query.filter_by(user_id=the_user).all()
+    # talents = User.vlogs
 
     if user is None:
         abort(404)
