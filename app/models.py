@@ -34,6 +34,7 @@ class User(UserMixin , db.Model):
         return check_password_hash(self.pass_secure,password)
 
 
+
 @login_manager.user_loader 
 def load_user(user_id):
     return User.query.get(int(user_id))
@@ -49,19 +50,20 @@ class Talent (db.Model):
 
     id = db.Column(db.Integer,primary_key = True)
     title = db.Column(db.String)
-    talent_video_path = db.Column(db.String())
+    talent_video_path = db.Column(db.String)
     posted = db.Column(db.DateTime,index=True,default=datetime.utcnow)
+    description =  db.Column(db.String)
     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
 
     category = db.Column(db.String)
     comments = db.relationship('Comment',backref = 'talent',lazy="dynamic")
 
-    def save_article(self):
+    def save_talent(self):
         db.session.add(self)
         db.session.commit()
 
 
-    def delete_article(self):
+    def delete_talent(self):
         db.session.delete(self)
         db.session.commit()
 
@@ -71,11 +73,7 @@ class Talent (db.Model):
 
         return talents
 
-    @classmethod
-    def fetch_by_category(cls,cat):
-        talents = Talent.query.filter_by(category = cat).all()
 
-        return talents
  
 '''
 Comment model . Defining our comments' table . Linking comments table with talents, table . 

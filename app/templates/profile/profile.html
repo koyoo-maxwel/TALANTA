@@ -3,37 +3,69 @@
 {% block body %}
 <div class="container-fluid">
     <div class="row">
-            <div class="col-md-4"></div>
         <div class="col-md-4">
-                {% if current_user.is_authenticated %}
-                <div class="card mb-3">
-                        <h3 class="card-header">  {{current_user.username |upper}} </h3>
-                        <div class="card-body">
-                        </div>
-                    
-                            {% if current_user.profile_pic_path %}
-                                <img src="{{url_for('static',filename=  current_user.profile_pic_path)}}" alt="" class="img-thumbnail">
-                            {% else %}
-                                <img style="height: 400px; width: 100%; display: block;" src="{{url_for('static',filename='photos/von.jpg')}}" alt="Card image">
-                            {% endif %}
+            {% if current_user.is_authenticated %}
+            <div class="card mb-3">
+                <h3 class="card-header"> {{current_user.username |upper}} </h3>
+                <div class="card-body">
+                </div>
 
-                        <div class="card-body">
-                        <p class="card-text">
-                            Hi , I'm {{ current_user.username }}
-                        </p>
-                        </div>
-                        <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
-                            {% if current_user.bio %}
-                                {{current_user.bio}}
-                            {% else %}
-                                <p>No bio yet</p>
-                            {% endif %}
-                        </ul>
-                    </div>
-               {% endif %}
+                {% if current_user.profile_pic_path %}
+                <img src="{{url_for('static',filename=  current_user.profile_pic_path)}}" alt="" class="img-thumbnail">
+                {% else %}
+                <img style="height: 400px; width: 100%; display: block;" src="{{url_for('static',filename='photos/von.jpg')}}"
+                    alt="Card image">
+                {% endif %}
+
+                <div class="card-body">
+                    <p class="card-text">
+                        Hi , I'm {{ current_user.username }} ,
+                    </p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        {% if current_user.bio %}
+                        {{current_user.bio}}
+                        {% else %}
+                        <p>No bio yet</p>
+                        {% endif %}
+                    </li>
+
+                    <li class="list-group-item">
+                        {% if current_user.bio %}
+                        {{current_user.bio}}
+                        {% else %}
+                        <p>No bio yet</p>
+                        {% endif %}
+                    </li>
+                    <li class="list-group-item">
+                        {% if current_user.sex %}
+                        {{current_user.sex}}
+                        {% else %}
+                        <p> <strong>SEX : </strong> Not Specified</p>
+                        {% endif %}
+                    </li>
+
+                    <li class="list-group-item">
+                        {% if current_user.phone_number %}
+                        {{current_user.phone_number}}
+                        {% else %}
+                        <p> <strong>MOBILE : </strong> </p>
+                        {% endif %}
+                    </li>
+
+                </ul>
+            </div>
+            {% endif %}
         </div>
-        <div class="col-md-4"></div>
+
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4"></div>
+                <div class="col-md-4"></div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

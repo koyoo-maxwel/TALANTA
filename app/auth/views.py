@@ -11,6 +11,7 @@ from ..email import mail_message
 @auth.route('/login',methods=['GET','POST'])
 def login():
     login_form = LoginForm()
+
     if login_form.validate_on_submit():
         user = User.query.filter_by(email = login_form.email.data).first()
         if user is not None and user.verify_password(login_form.password.data):
@@ -20,13 +21,16 @@ def login():
         flash('Invalid username or Password')
 
     title = "Login"
+
     return render_template('auth/login.html',login_form = login_form,title=title)
 
     
 
 @auth.route('/register',methods = ["GET","POST"])
 def register():
+
     form = RegistrationForm()
+
     if form.validate_on_submit():
         user = User(email = form.email.data, username = form.username.data,password = form.password.data)
         db.session.add(user)
@@ -34,10 +38,10 @@ def register():
 
         mail_message("Welcome to world's talents show casing","email/welcome_user",user.email,user=user)
 
-
-        return redirect(url_for('auth.login'))
-        title = "New Account"
+        # flash("Successfully signed up !")
+        return redirect(url_for('.login'))
     return render_template('auth/signup.html',registration_form = form)
+
 
 @auth.route('/logout')
 @login_required
