@@ -135,17 +135,15 @@ def category(id):
     talents_in_category = Talents.get_talent(id)
     return render_template('category.html' ,category= category, talents= talents_in_category)
 
-@main.route('/talent/comments/new/<int:id>',methods = ['GET','POST'])
-@login_required
-def new_comment(id):
-    form = CommentsForm()
-    vote_form = UpvoteForm()
-    if form.validate_on_submit():
-        new_comment = Comment(talent_id =id,comment=form.comment.data,username=current_user.username,votes=form.vote.data)
-        new_comment.save_comment()
-        return redirect(url_for('main.index'))
-    #title = f'{talent_result.id} review'
-    return render_template('posts.html',comment_form=form, vote_form= vote_form)
+
+@main.route('/user/<username>')
+def profile(username):
+    user = User.query.filter_by(username = username).first()
+
+    if user is None:
+        abort(404)
+
+    return render_template("profile/profile.html", user = user)
 
 @main.route('/user/<uname>/update/pic',methods= ['POST'])
 @login_required
@@ -158,14 +156,7 @@ def update_pic(uname):
         db.session.commit()
     return redirect(url_for('main.profile',uname=uname))
 
-@main.route('/user/<uname>')
-def profile(uname):
-    user = User.query.filter_by(username = uname).first()
 
-    if user is None:
-        abort(404)
-
-    return render_template("profile/profile.html", user = user)
 
 @main.route('/user/<uname>/update',methods = ['GET','POST'])
 @login_required
@@ -186,10 +177,3 @@ def update_profile(uname):
     
     return render_template('profile/update.html',form =form)
 
-@main.route('/view/comment/<int:id>')
-def view_comments(id):
-    '''
-    Function that returs  the comments belonging to a particular talent
-    '''
-    comments = Comment.get_comments(id)
-    return render_template('posts.html',comments = comments, id=id)

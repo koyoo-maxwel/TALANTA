@@ -51,7 +51,7 @@ class Talent (db.Model):
     posted = db.Column(db.DateTime,index=True,default=datetime.utcnow)
     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
 
-    category = db.relationship('TalentCategory',backref = 'talent',lazy="dynamic")
+    category = db.Column(db.String)
     comments = db.relationship('Comment',backref = 'talent',lazy="dynamic")
 
     def save_article(self):
@@ -96,23 +96,23 @@ class Comment (db.Model):
 
 
 
-class TalentCategory(db.Model):
-    '''
-    Function that defines different categories of talents
-    '''
-    __tablename__ ='categories'
+# class TalentCategory(db.Model):
+#     '''
+#     Function that defines different categories of talents
+#     '''
+#     __tablename__ ='categories'
 
 
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(255))
-    category_description = db.Column(db.String(255))
-    talent_id =  db.Column(db.Integer,db.ForeignKey("talents.id"))
+#     id = db.Column(db.Integer, primary_key=True)
+#     name = db.Column(db.String(255))
+#     category_description = db.Column(db.String(255))
+#     talent_id =  db.Column(db.Integer,db.ForeignKey("talents.id"))
 
 
-    @classmethod
-    def get_categories(cls):
-            '''
-            This function fetches all the categories from the database
-            '''
-            categories = TalentCategory.query.all()
-            return categories
+    # @classmethod
+    # def get_categories(cls):
+    #         '''
+    #         This function fetches all the categories from the database
+    #         '''
+    #         categories = TalentCategory.query.all()
+    #         return categories
