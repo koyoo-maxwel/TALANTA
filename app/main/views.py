@@ -1,10 +1,10 @@
 import os
 from flask import render_template, request, redirect, url_for, abort  
 from . import main  
-from .forms import CommentsForm, UpdateProfile, TalentForm,UploadForm
+from .forms import CommentsForm, UpdateProfile, TalentForm
 from ..models import Comment, Talent, User 
 from flask_login import login_required, current_user
-from .. import db , videos
+from .. import db , videos ,photos
 
 # import markdown2
 
@@ -17,7 +17,9 @@ def index():
     '''
     title = 'Talanta - Show Case Talent !'
 
-    # search_talent = request.args.get('talent_query')
+    search_talent = request.args.get('talent_query')
+
+
     talents= Talent.fetch_videos()  
 
     return render_template('index.html', title = title, talents= talents)
@@ -100,7 +102,7 @@ def search(talent_name):
 
 
 
-@main.route('/talent/new/', methods = ['GET','POST'])
+@main.route('/talent/<username>/new/', methods = ['GET','POST'])
 @login_required
 def new_talent():
     '''
@@ -109,32 +111,18 @@ def new_talent():
     form = TalentForm()
 
 
-    if category is None:
-        abort( 404 )
+    # if username is None:
+    #     abort( 404 )
 
     if form.validate_on_submit():
-        talent= form.content.data
-        category_id = form.category_id.data
-        new_talent= talent(talent= talent, category_id= category_id)
+        category= form.category.data
+        content = form.content.data
+        new_talent= Talent(category= category,content=content)
 
         new_talent.save_talent()
         return redirect(url_for('main.index'))
 
-    return render_template('new_talent.html', new_talent_form= form, category= category)
-
-@main.route('/category/<int:id>')
-def category(id):
-    '''
-    function that returns talents based on the entered category id
-    '''
-    category = Category.query.get(id)
-
-    if category is None:
-        abort(404)
-
-    talents_in_category = Talents.get_talent(id)
-    return render_template('category.html' ,category= category, talents= talents_in_category)
-
+    return render_template('new_video.html', new_talent_form= form, category= category)
 
 @main.route('/user/<username>')
 def profile(username):
@@ -145,7 +133,7 @@ def profile(username):
 
     return render_template("profile/profile.html", user = user)
 
-@main.route('/user/<uname>/update/pic',methods= ['POST'])
+@main.route('/user/<username>/update/pic',methods= ['POST'])
 @login_required
 def update_pic(uname):
     user = User.query.filter_by(username = uname).first()

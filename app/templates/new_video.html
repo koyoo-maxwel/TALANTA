@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <div class="row">
+                <div class="col-md-6">
+                    uploaded video will appear here
+                </div>
+                <div class="col-md-6">
+                        {% if user == current_user %}
+                        <form  action="{{url_for('main.upload_video',username=user.username)}}" method="post" enctype = "multipart/form-data">
+          
+                        <input type="file"  name="videos" class="form-control" required>
+                        <input type="submit">
+                        </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+</div>
+{% endblock %}

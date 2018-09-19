@@ -15,7 +15,7 @@
 
             </li>
         </ul>
-        <form style="margin-right:30%"  class="form-inline my-2 my-lg-0">
+        <form style="margin-right:40%;position:absolute"  class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="text" placeholder="browse talents">
             <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
         </form>
@@ -24,7 +24,7 @@
                 <ul class="navbar-nav mr-auto">
                     {% if current_user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{url_for('main.index')}}">
+                        <a class="nav-link" href="{{url_for('main.new_talent',username = current_user.username)}}">
                             Showcase Talent + <i style="font-size:24px;color:white" class="fa fa-envira"></i>
                         </a>
                     </li>

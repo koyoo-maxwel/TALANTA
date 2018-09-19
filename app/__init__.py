@@ -17,6 +17,7 @@ login_manager.login_view = 'auth.login'
 mail = Mail()
 simple = SimpleMDE()
 videos = UploadSet("videos", ALL)
+photos = UploadSet("photos", IMAGES)
 
 def create_app(config_name):
     app = Flask(__name__)
@@ -34,6 +35,7 @@ def create_app(config_name):
     mail.init_app(app)
     simple.init_app(app)
     configure_uploads(app,videos)
+    configure_uploads(app,photos)
     
 
      # *** Registering the blueprint ***
