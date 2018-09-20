@@ -90,7 +90,7 @@ Open the browser on `http://localhost:5000/`
 ## Known bugs
 
 Sending batch emails bug
-If others are found, E-mail us [talanta](https://accounts.google.com//showcasetalanta@gmail.com)
+If others are found, E-mail us [talanta](https://accounts.google.com/signin/v2/sl/pwd?service=mail&passive=true&rm=false&continue=https%3A%2F%2Fmail.google.com%2Fmail%2Fu%2F0%2F&ss=1&scc=1&authuser=0&ltmpl=default&ltmplcache=2&emr=1&osid=1&flowName=GlifWebSignIn&flowEntry=ServiceLogin)
 
 ## Technologies used
 
@@ -103,7 +103,7 @@ If others are found, E-mail us [talanta](https://accounts.google.com//showcaseta
 
 ## Support and contact details
 
-Contact talanta for any burgs to help us improve[talanta](showcasetalanta@gmail.com) and make the app more interactive
+Contact talanta for any burgs to help us improve[talanta](https://accounts.google.com/signin/v2/sl/pwd?service=mail&passive=true&rm=false&continue=https%3A%2F%2Fmail.google.com%2Fmail%2Fu%2F0%2F&ss=1&scc=1&authuser=0&ltmpl=default&ltmplcache=2&emr=1&osid=1&flowName=GlifWebSignIn&flowEntry=ServiceLogin) and make the app more interactive
 
 ### License
 
