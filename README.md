@@ -14,9 +14,12 @@
 
 ## Description
 
+'''
 Talata is an online platform that gives people  an opportunity to showcase their
 talents and meet mentors online to facilitate their ability.
+
 It not only gives mentorship programmes but also help the users reach out to the their financial needs by linking them with different people who are willing and able to offer such support to them.
+'''
 
 ### 19th/09/2018
 
