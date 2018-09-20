@@ -73,7 +73,10 @@ class Talent (db.Model):
 
         return talents
 
-
+    @classmethod
+    def fetch_by_category(cls,category):
+        talents = Talent.query.filter_by(category = category).all()
+        return talents
  
 '''
 Comment model . Defining our comments' table . Linking comments table with talents, table . 

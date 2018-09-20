@@ -17,13 +17,30 @@ def index():
     '''
     title = 'Talanta - Show Case Talent !'
 
-    
+    music = Talent.fetch_by_category('Music')
+    art = Talent.fetch_by_category('Art & Craft')
+    sports = Talent.fetch_by_category('Sports')
+    creative = Talent.fetch_by_category("Creativity")
+    other = Talent.fetch_by_category('other')
+
     search_talent = request.args.get('talent_query')
 
+    if search_talent:
+        redirect(url_for('.search_talent',talent = talent))
 
-    talents= Talent.fetch_videos()  
+    # talents= Talent.fetch_videos()  
 
-    return render_template('index.html', title = title, talents= talents)
+    return render_template('index.html',title = title, music= music,art = art,sports=sports,creative=creative,other=other)
+
+@main.route('/search/<talent>')
+def search_talent():
+
+    talent_list = talent.split(" ")
+    search_format = '+'.join(talent_list)
+
+    results = everything(search_format)
+
+    return render_template('searched.html',results = results)
 
 #this section consist of the category root functions
 
