@@ -1,6 +1,6 @@
 {% macro displayVideos(videos) %}
     {% for video in videos %}
-        <div class="card mb-3 col-md-4">
+        <div class="card mb-3 col-md-3">
             <div class="card-body">
                 <h6 class="card-title"> {{video.title}} </h6>
             </div>
@@ -11,6 +11,9 @@
             </iframe> -->
 
             <video width="100%" controls>
+                <a href="{{url_for('main.show_video',id=video.id)}}">
+                    
+                </a>
                 <source src="{{ url_for('static',filename=video.talent_video_path)}}" type="video/mp4">
                 <source src="{{url_for('static',filename=video.talent_video_path)}}" type="video/ogg">
                 <source src="{{ url_for('static',filename=video.talent_video_path) }}" type="video/webm">

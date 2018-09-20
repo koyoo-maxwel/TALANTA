@@ -21,10 +21,7 @@
 
 
                 {% if current_user.profile_pic_path %}
-                <img src="{{url_for('static',filename=  current_user.profile_pic_path)}}" alt="" class="img-thumbnail">
-                {% else %}
-                <img style="height: 400px; width: 100%; display: block;" src="{{url_for('static',filename='photos/von.jpg')}}"
-                    alt="Card image">
+                    <img src="{{url_for('static',filename=current_user.profile_pic_path)}}" alt="" class="img-thumbnail">
                 {% endif %}
 
                 <div class="card-body">

@@ -7,26 +7,48 @@
         <div class="col-md-1"></div>
 
         <div class="col-md-10">
+
+            {% if music %}
             <hr>
+            <h3> Music </h3>
             <div class="row">
-                {% if talents %}
-                {{macro.displayVideos(talents)}}
-                {% else %}
-                <div class="card mb-3 col-md-3 ">
-                    <div class="card-body">
-                        <h5 class="card-title"> TALANTA </h5>
-                    </div>
-                    <iframe width="100%" height="auto" src="https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=1">
-                    </iframe>
-                    <div class="card-body">
-                        <p class="card-text">
-                            <strong> Adi Gaza Tremor </strong> <br>
-                            5 Weeks ago
-                        </p>
-                    </div>
-                </div>
-                {% endif %}
+                {{macro.displayVideos(music)}}
             </div>
+            {% endif %}
+
+            {% if creative %}
+            <hr>
+            <h3> Creativity </h3>
+            <div class="row">
+                {{macro.displayVideos(creative)}}
+            </div>
+            {% endif %}
+
+            {% if art %}
+            <hr>
+            <h3> Art & Craft </h3>
+            <div class="row">
+                {{macro.displayVideos(art)}}
+            </div>
+            {% endif %}
+
+            {% if sports %}
+            <hr>
+            <h3> Sports </h3>
+            <div class="row">
+                {{macro.displayVideos(sports)}}
+            </div>
+            {% endif %}
+
+
+            {% if other %}
+            <hr>
+            <h3> Others </h3>
+            <div class="row">
+                {{macro.displayVideos(other)}}
+            </div>
+            {% endif %}
+
         </div>
 
         <div class="col-md-1"></div>

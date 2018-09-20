@@ -25,7 +25,7 @@ def index():
     search_talent = request.args.get('talent_query')
 
     if search_talent:
-        redirect(url_for('.search_talent', talent=talent))
+        redirect(url_for('.search_talent', talent=search_talent))
 
     # talents= Talent.fetch_videos()
 
@@ -33,12 +33,14 @@ def index():
 
 
 @main.route('/search/<talent>')
-def search_talent():
+def search_talent(talent):
 
     talent_list = talent.split(" ")
     search_format = '+'.join(talent_list)
 
     results = Talent.search(search_format)
+
+    print(results)
 
     return render_template('searched.html', results=results)
 
@@ -108,15 +110,15 @@ A route to videos searched from the database
 '''
 
 
-@main.route('/search/<talent_name>')
-def search(talent_name):
-    '''
-    View function to display the search results
-    '''
-    searched_talents = Talent.search_talent(talent_name)
-    title = f'search results for {talent_name}'
+# @main.route('/search/<talent_name>')
+# def search(talent_name):
+#     '''
+#     View function to display the search results
+#     '''
+#     searched_talents = Talent.search_talent(talent_name)
+#     title = f'search results for {talent_name}'
 
-    return render_template('posts.html', talents=searched_talents)
+#     return render_template('posts.html', talents=searched_talents)
 
 
 @main.route('/talanta/<username>/new/', methods=['GET', 'POST'])
@@ -199,7 +201,7 @@ def update_profile(username):
         user.bio = form.bio.data
         user.phone_number = form.phone_number.data
         user.sex = form.sex.data
-        
+
 
         db.session.add(user)
         db.session.commit()
@@ -208,3 +210,19 @@ def update_profile(username):
 
     return render_template('profile/update_profile.html', form=form)
 
+
+
+'''
+Routing viewer to full video details
+'''
+@main.route('/video?<int:id>')
+def show_video(id):
+    video = Talent.query.filter_by(id=id).first()
+
+    comments = Comment.query.filter_by(talent_id=id).all()
+    comment_form = CommentsForm()
+
+    # if validate_on_submit():
+
+
+    return render_template('video.html',video=video,comments=comments,form=comment_form)
