@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-1"></div>
+
+        <div class="col-md-10">
+            {% if username == current_user.username %}
+                    <form action="{{url_for('main.profile',username= current_user.username)}}" method="post" enctype="multipart/form-data">
+
+                        <input type="file" name="photos" class="form-control" required>
+                        <input type="submit">
+                </form>
+            {% endif %}
+        </div>
+
+        <div class="col-md-1"></div>
+    </div>
+</div>
+{% endblock %}

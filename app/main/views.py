@@ -1,13 +1,12 @@
 import os
 import app
-from flask import render_template, request, redirect, url_for, abort  
-from . import main  
+from flask import render_template, request, redirect, url_for, abort ,flash
+from . import main
 from .forms import CommentsForm, UpdateProfile, TalentForm
-from ..models import Comment, Talent, User 
+from ..models import Comment, Talent, User
 from flask_login import login_required, current_user
-from .. import db , videos ,photos
-from config import config_options , Config
-
+from .. import db, videos, photos
+from config import config_options, Config
 
 
 @main.route('/')
@@ -17,24 +16,45 @@ def index():
     '''
     title = 'Talanta - Show Case Talent !'
 
+    music = Talent.fetch_by_category('Music')
+    art = Talent.fetch_by_category('Art & Craft')
+    sports = Talent.fetch_by_category('Sports')
+    creative = Talent.fetch_by_category("Creativity")
+    other = Talent.fetch_by_category('other')
+
     search_talent = request.args.get('talent_query')
 
+    if search_talent:
+        redirect(url_for('.search_talent', talent=search_talent))
 
-    talents= Talent.fetch_videos()  
+    # talents= Talent.fetch_videos()
 
-    return render_template('index.html', title = title, talents= talents)
+    return render_template('index.html', title=title, music=music, art=art, sports=sports, creative=creative, other=other)
 
-#this section consist of the category root functions
+
+@main.route('/search/<talent>')
+def search_talent(talent):
+
+    talent_list = talent.split(" ")
+    search_format = '+'.join(talent_list)
+
+    results = Talent.search(search_format)
+
+    print(results)
+
+    return render_template('searched.html', results=results)
+
+# this section consist of the category root functions
+
 
 @main.route('/sports/talents/')
 def sports():
     '''
     View root page function that returns the index page and its data
     '''
-    talents= talent.get_all_talents()
-    title = 'Home - Welcome to The best talent showcasing  Website Online'  
-    return render_template('posts.html', title = title, talents= talents )
-
+    talents = talent.get_all_talents()
+    title = 'Home - Welcome to The best talent showcasing  Website Online'
+    return render_template('posts.html', title=title, talents=talents)
 
 
 @main.route('/music/talents/')
@@ -44,10 +64,9 @@ def music():
     '''
     title = 'Music'
 
-    talents= talent.get_all_talents()
+    talents = talent.get_all_talents()
 
-    return render_template('posts.html', title = title, talents= talents )
-
+    return render_template('posts.html', title=title, talents=talents)
 
 
 @main.route('/entertainment/talents/')
@@ -57,9 +76,9 @@ def entertainment():
     '''
     title = 'Entertainment'
 
-    talents= talent.get_all_talents()
+    talents = talent.get_all_talents()
 
-    return render_template('posts.html', title = title, talents= talents )
+    return render_template('posts.html', title=title, talents=talents)
 
 
 @main.route('/others/talents/')
@@ -68,136 +87,157 @@ def others():
     View root page function that returns the index page and its data
     '''
     title = 'others'
-    talents= talent.get_all_talents()
-    return render_template('posts.html', title = title, talents= talents )
- 
-#  end of category root functions
+    talents = talent.get_all_talents()
+    return render_template('posts.html', title=title, talents=talents)
 
+#  end of category root functions
 
 
 @main.route('/talent/<int:talent_id>')
 def talent(talent_id):
-
     '''
     View talent page function that returns the talent details page and its data
     '''
-    found_talent= Talent.get_talent(talent_id)
+    found_talent = Talent.get_talent(talent_id)
     title = talent_id
     talent_comments = Comment.get_comments(talent_id)
 
-    return render_template('posts.html',title= title ,found_talent= found_talent, talent_comments= talent_comments)
+    return render_template('posts.html', title=title, found_talent=found_talent, talent_comments=talent_comments)
+
 
 '''
 A route to videos searched from the database
 '''
-@main.route('/search/<talent_name>')
-def search(talent_name):
-    '''
-    View function to display the search results
-    '''
-    searched_talents = Talent.search_talent(talent_name)
-    title = f'search results for {talent_name}'
-
-    return render_template('posts.html',talents = searched_talents)
 
 
+# @main.route('/search/<talent_name>')
+# def search(talent_name):
+#     '''
+#     View function to display the search results
+#     '''
+#     searched_talents = Talent.search_talent(talent_name)
+#     title = f'search results for {talent_name}'
 
-@main.route('/talanta/<username>/new/', methods = ['GET','POST'])
+#     return render_template('posts.html', talents=searched_talents)
+
+
+@main.route('/talanta/<username>/new/', methods=['GET', 'POST'])
 @login_required
 def new_talent(username):
     '''
     Function that enables one to post new talents
     '''
-    user = User.query.filter_by(username = username).first()
+    user = User.query.filter_by(username=username).first()
     form = TalentForm()
-
-
-    if user is None:
-        abort( 404 )
-
-    if form.validate_on_submit():
-        title = form.title.data
-        category= form.category.data
-        description = form.description.data
-
-        file = form.video_file.data.filename
-        path = f'{app.Config.UPLOADED_VIDEOS_DEST}{form.video_file.data.filename}'
-        form.video_file.data.save(os.path.join(app.Config.UPLOADED_VIDEOS_DEST, file))
-
-
-        new_talent= Talent(category= category,title=title,talent_video_path=path, description =description, user=current_user)
-
-        new_talent.save_talent()
-
-        return redirect(url_for('main.profile',username=username))
-
-    return render_template('new_video.html',user=user, form=form)
-
-
-
-
-@main.route('/user/<username>')
-def profile(username):
-
-    user = User.query.filter_by(username = username).first()
-    # talents = Talent.query.filter_by(user=username).all()
-    talents = User.vlogs
 
     if user is None:
         abort(404)
 
-    return render_template("profile/profile.html" , talents =talents)
+    if form.validate_on_submit():
+        title = form.title.data
+        category = form.category.data
+        description = form.description.data
 
-@main.route('/user/<username>/update/pic',methods= ['POST'])
+        file = form.video_file.data.filename
+        path = f'{app.Config.UPLOADED_VIDEOS_DEST}/{form.video_file.data.filename}'
+        rel_path = f'videos/{form.video_file.data.filename}'
+        form.video_file.data.save(os.path.join(
+            app.Config.UPLOADED_VIDEOS_DEST, file))
+
+        new_talent = Talent(category=category, title=title,
+                            talent_video_path=rel_path, description=description, user=current_user)
+
+        new_talent.save_talent()
+
+        return redirect(url_for('main.profile', username=username))
+
+    return render_template('new_video.html', user=user, form=form)
+
+
+@main.route('/user/<username>/',methods =["POST","GET"])
+def profile(username):
+    user = User.query.filter_by(username=username).first()
+
+    talents = Talent.query.filter_by(user_id=user.id).all()
+    for talent in talents:
+        print(talent.talent_video_path)
+    # talents = User.vlogs
+
+    if user is None:
+        abort(404)
+
+    return render_template("profile/profile.html",user=user, talents=talents)
+
+
+
+@main.route('/profile/<username>/pic/upload',methods =["POST","GET"])
 @login_required
-def update_pic(uname):
-    user = User.query.filter_by(username = uname).first()
-    if 'photo' in request.files:
-        filename = photos.save(request.files['photo'])
-        path = f'photos/{filename}'
-        user.profile_pic_path = path 
+def update_pic(username):
+
+    user = User.query.filter_by(username = username).first()
+
+    if 'photos' in request.files:
+        filename = photos.save(request.files['photos'])
+        path = f"photos/{filename}"
+        user.profile_pic_path = path
         db.session.commit()
-    return redirect(url_for('main.profile',uname=uname))
 
-'''
-This route will be taken whenever uploading a new video to the db
-'''
-# @main.route('/talanta/<username>/new/video',methods= ['POST'])
-# @login_required
-# def upload_video(username):
-#     talanta = Talent.query.filter_by(user = username).first()
+    return render_template("profile/upload.html",username=username)
 
 
-#     image = 'uploads/' + form.image_file.data.filename
-#     form.image_file.data.save(os.path.join(app.static_folder, image))
 
-
-#     if 'video' in request.files:
-#         filename = videos.save(request.files['video'])
-#         path = f'videos/{filename}'
-#         talanta.talent_video_path = path 
-#         db.session.commit()
-
-
-#     return redirect(url_for('main.profile',username = username))
-
-
-@main.route('/user/<uname>/update',methods = ['GET','POST'])
+@main.route('/user/<username>/update', methods=['GET', 'POST'])
 @login_required
-def update_profile(uname):
-    user = User.query.filter_by(username = uname).first()
+def update_profile(username):
+    user = User.query.filter_by(username=username).first()
     if user is None:
         abort(404)
 
     form = UpdateProfile()
 
     if form.validate_on_submit():
+        # user = User(bio=form.bio.data, phone_number=form.phone_number.data, sex=form.sex.data)
         user.bio = form.bio.data
+        user.phone_number = form.phone_number.data
+        user.sex = form.sex.data
+
 
         db.session.add(user)
         db.session.commit()
 
-        return redirect(url_for('.profile',uname=user.username))
-    
-    return render_template('profile/update.html',form =form)
+        return redirect(url_for('.profile', username= username))
 
+    return render_template('profile/update_profile.html', form=form)
+
+
+'''
+Routing viewer to full video details
+'''
+@main.route('/video?<int:id>',methods=["post","get"])
+def show_video(id):
+    comment_form = CommentsForm()
+    if comment_form.validate_on_submit():
+        new_comment = Comment(comment = comment_form.comment.data ,user=current_user, talent_id = id)
+        new_comment.save_comment()
+
+    video = Talent.query.filter_by(id=id).first()
+
+    comments = Comment.query.filter_by(talent_id=id).all()
+
+
+
+    return render_template('video.html',video=video,comments=comments,form=comment_form)
+
+
+'''
+A route to delete comments from a particular blog
+'''
+@main.route('/comment/delete/<int:id>')
+def delete_comment(id):
+
+    comment = Comment.query.filter_by(id=id).first()
+    talent = Talent.query.filter_by(id = comment.talent_id).first()
+    comment.delete_comment()
+    flash('Comment successfully deleted !')
+
+    return redirect(url_for('.show_video',id=talent.id))

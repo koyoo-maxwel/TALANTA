@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="card mb-12 col-md-12">
+            <video height="auto" width="100%" controls>
+                <a href="{{url_for('main.show_video',id=video.id)}}">
+
+                </a>
+                <source onClick="makeBig();" src="{{ url_for('static',filename=video.talent_video_path)}}" type="video/mp4">
+                <source src="{{url_for('static',filename=video.talent_video_path)}}" type="video/ogg">
+                <source src="{{ url_for('static',filename=video.talent_video_path) }}" type="video/webm">
+                Your browser does not support HTML5 video.
+            </video>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-1"></div>
+
+        <div class="col-md-10">
+
+            <a href="#" class="list-group-item list-group-item-action active">
+                Comments
+            </a>
+            <a href="#" class="list-group-item list-group-item-action">
+                {{ wtf.quick_form(form) }}
+            </a>
+            {% if comments %}
+            {% for comment in comments %}
+            <a href="#" class="list-group-item list-group-item-action active">
+                {{ comment.user.username }} :
+                {{comment.comment}}
+            </a>
+            {% if current_user == comment.user %}
+            <a href="{{url_for('.delete_comment',id = comment.id)}}" class="badge badge-danger badge-pill">
+                    Delete Comment
+                </a>
+            {% endif %}
+            {% endfor %}
+
+            {% else %}
+            <a href="#" class="list-group-item list-group-item-action">
+                No comments .
+            </a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="col-md-1"></div>
+</div>
+</div>
+{% endblock %}

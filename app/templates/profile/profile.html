@@ -1,55 +1,61 @@
 {% extends 'base.html' %}
+{% import 'macros.html' as macro %}
 
 {% block body %}
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-4">
-            {% if current_user.is_authenticated %}
             <div class="card mb-3">
-                <h3 class="card-header"> {{current_user.username |upper}} </h3>
+                <h3 class="card-header"> {{user.username}}  
+                </h3>
+                {% if current_user.username == user.username %}
                 <div class="card-body">
+                    <a href="{{ url_for('main.update_profile',username=current_user.username) }}"> 
+                            <button type="button" class="btn btn-primary">Edit Profile</button>
+                    </a>
+                    <a href="{{ url_for('main.update_pic',username=current_user.username) }}"> 
+                        <button type="button" class="btn btn-primary">Upload Profile Pic</button>
+                </a>
                 </div>
+                {% endif %}
 
 
                 {% if current_user.profile_pic_path %}
-                <img src="{{url_for('static',filename=  current_user.profile_pic_path)}}" alt="" class="img-thumbnail">
-                {% else %}
-                <img style="height: 400px; width: 100%; display: block;" src="{{url_for('static',filename='photos/von.jpg')}}"
-                    alt="Card image">
+                    <img src="{{url_for('static',filename=current_user.profile_pic_path)}}" alt="" class="img-thumbnail">
                 {% endif %}
 
                 <div class="card-body">
                     <p class="card-text">
-                        Hi , I'm {{ current_user.username }} ,
+                        Hi , I'm {{ user.username }} ,
                     </p>
                 </div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
-                        {% if current_user.bio %}
-                        {{current_user.bio}}
+                        {% if user.bio %}
+                        BIO : {{user.bio}}
                         {% else %}
                         <p>No bio yet</p>
                         {% endif %}
                     </li>
 
                     <li class="list-group-item">
-                        {% if current_user.bio %}
-                        {{current_user.bio}}
+                        {% if user.email %}
+                        EMAIL : {{user.email}}
                         {% else %}
-                        <p>No bio yet</p>
+                        <p> EMAIL : {{user.email}}</p>
                         {% endif %}
                     </li>
                     <li class="list-group-item">
-                        {% if current_user.sex %}
-                        {{current_user.sex}}
+                        {% if user.sex %}
+                            GENDER : {{user.sex}}
                         {% else %}
                         <p> <strong>SEX : </strong> Not Specified</p>
                         {% endif %}
                     </li>
 
                     <li class="list-group-item">
-                        {% if current_user.phone_number %}
-                        {{current_user.phone_number}}
+                        {% if user.phone_number %}
+                        MOBILE : {{user.phone_number}}
                         {% else %}
                         <p> <strong>MOBILE : </strong> </p>
                         {% endif %}
@@ -57,17 +63,16 @@
 
                 </ul>
             </div>
-            {% endif %}
         </div>
 
-        <div class="col-md-4">
-            <div class="row">
-                <div class="col-md-4"></div>
-                <div class="col-md-4"></div>
-                <div class="col-md-4"></div>
+        <div class="col-md-8">
+            <h2> {{ user.username }}'s videos </h2>
+            <hr> <div class="row">
+                {{ macro.displayVideos(talents) }}
             </div>
 
         </div>
     </div>
+</div>
 </div>
 {% endblock %}

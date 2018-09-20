@@ -7,6 +7,8 @@ class CommentsForm(FlaskForm):
     submit = SubmitField('Comment')  
 
 class UpdateProfile(FlaskForm):
+    sex = SelectField('Gender',choices=[('Male','Male'),('Female','Female'),('Other','Other')])
+    phone_number  = StringField('Mobile e.g (+254) 722 333 444')
     bio = TextAreaField('Tell us about you.',validators = [Required()])
     submit = SubmitField('Update') 
 
