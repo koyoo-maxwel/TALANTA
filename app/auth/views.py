@@ -35,7 +35,6 @@ def register():
         user = User(email = form.email.data, username = form.username.data,password = form.password.data)
         db.session.add(user)
         db.session.commit()
-
         mail_message("Welcome to world's talents show casing","email/welcome_user",user.email,user=user)
 
         # flash("Successfully signed up !")
