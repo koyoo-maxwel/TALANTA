@@ -90,7 +90,7 @@ Open the browser on `http://localhost:5000/`
 ## Known bugs
 
 Sending batch emails bug
-If others are found, E-mail us [talanta](showcasetalanta@gmail.com)
+If others are found, E-mail us [talanta](https://accounts.google.com//showcasetalanta@gmail.com)
 
 ## Technologies used
 
