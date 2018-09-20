@@ -17,6 +17,7 @@ def index():
     '''
     title = 'Talanta - Show Case Talent !'
 
+    
     search_talent = request.args.get('talent_query')
 
 
@@ -182,10 +183,10 @@ This route will be taken whenever uploading a new video to the db
 #     return redirect(url_for('main.profile',username = username))
 
 
-@main.route('/user/<uname>/update',methods = ['GET','POST'])
+@main.route('/user/<username>/update',methods = ['GET','POST'])
 @login_required
-def update_profile(uname):
-    user = User.query.filter_by(username = uname).first()
+def update_profile(username):
+    user = User.query.filter_by(username = username).first()
     if user is None:
         abort(404)
 
@@ -193,11 +194,15 @@ def update_profile(uname):
 
     if form.validate_on_submit():
         user.bio = form.bio.data
+        
+        file = form.video_file.data.filename
+        path = f'{app.Config.UPLOADED_VIDEOS_DEST}{form.video_file.data.filename}'
+        form.video_file.data.save(os.path.join(app.Config.UPLOADED_VIDEOS_DEST, file))
 
         db.session.add(user)
         db.session.commit()
 
         return redirect(url_for('.profile',uname=user.username))
     
-    return render_template('profile/update.html',form =form)
+    return render_template('profile/update_profile.html',form =form)
 
