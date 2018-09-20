@@ -210,7 +210,6 @@ def update_profile(username):
     return render_template('profile/update_profile.html', form=form)
 
 
-
 '''
 Routing viewer to full video details
 '''
