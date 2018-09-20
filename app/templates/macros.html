@@ -11,9 +11,9 @@
             </iframe> -->
 
             <video width="100%" controls>
-                <source src="{{ video.talent_video_path }}" type="video/mp4">
-                <source src="{{ video.talent_video_path }}" type="video/ogg">
-                <source src="{{ video.talent_video_path }}" type="video/webm">
+                <source src="{{ url_for('static',filename=video.talent_video_path)}}" type="video/mp4">
+                <source src="{{url_for('static',filename=video.talent_video_path)}}" type="video/ogg">
+                <source src="{{ url_for('static',filename=video.talent_video_path) }}" type="video/webm">
                 Your browser does not support HTML5 video.
             </video>
 

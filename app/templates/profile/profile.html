@@ -13,6 +13,9 @@
                     <a href="{{ url_for('main.update_profile',username=current_user.username) }}"> 
                             <button type="button" class="btn btn-primary">Edit Profile</button>
                     </a>
+                    <a href="{{ url_for('main.update',username=current_user.username) }}"> 
+                        <button type="button" class="btn btn-primary">Upload Profile Pic</button>
+                </a>
                 </div>
                 {% endif %}
 
