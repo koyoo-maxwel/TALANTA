@@ -29,15 +29,7 @@ end
 # unset irrelevant variables
 deactivate nondestructive
 
-<<<<<<< HEAD
 set -gx VIRTUAL_ENV "/home/student/TALANTA/virtual"
-=======
-<<<<<<< HEAD
-set -gx VIRTUAL_ENV "/home/vicklyne/Talanta/TALANTA/virtual"
-=======
-set -gx VIRTUAL_ENV "/home/mutinda/Documents/python/Flask/TALANTA/virtual"
->>>>>>> 52326021ff8133065f83937677cac4c319fb6f81
->>>>>>> 57558397f6e0091e519752fd4bc17f4789344509
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH

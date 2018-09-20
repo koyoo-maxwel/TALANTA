@@ -1,6 +1,7 @@
 
 {% macro displayVideos(videos) %}
     {% for video in videos %}
+    <body style="background-color:darkgrey;">
         <div class="card mb-3 col-md-3 ">
             <div class="card-body">
                 <h5 class="card-title"> Odi Dance </h5>
@@ -15,5 +16,6 @@
                 </p>
             </div>
         </div>
+    </body>
     {% endfor %}
 {% endmacro %}
