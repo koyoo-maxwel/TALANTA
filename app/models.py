@@ -103,24 +103,3 @@ class Comment (db.Model):
     def delete_comment(self):
         db.session.delete(self)
         db.session.commit()
-
-
-# class TalentCategory(db.Model):
-#     '''
-#     Function that defines different categories of talents
-#     '''
-#     __tablename__ ='categories'
-
-
-#     id = db.Column(db.Integer, primary_key=True)
-#     name = db.Column(db.String(255))
-#     category_description = db.Column(db.String(255))
-#     talent_id =  db.Column(db.Integer,db.ForeignKey("talents.id"))
-
-    # @classmethod
-    # def get_categories(cls):
-    #         '''
-    #         This function fetches all the categories from the database
-    #         '''
-    #         categories = TalentCategory.query.all()
-    #         return categories

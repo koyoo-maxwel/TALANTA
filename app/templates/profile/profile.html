@@ -13,7 +13,7 @@
                     <a href="{{ url_for('main.update_profile',username=current_user.username) }}"> 
                             <button type="button" class="btn btn-primary">Edit Profile</button>
                     </a>
-                    <a href="{{ url_for('main.update',username=current_user.username) }}"> 
+                    <a href="{{ url_for('main.update_pic',username=current_user.username) }}"> 
                         <button type="button" class="btn btn-primary">Upload Profile Pic</button>
                 </a>
                 </div>
@@ -42,8 +42,8 @@
                     </li>
 
                     <li class="list-group-item">
-                        {% if current_user.bio %}
-                        EMAIL : {{current_user.bio}}
+                        {% if current_user.email %}
+                        EMAIL : {{current_user.email}}
                         {% else %}
                         <p> EMAIL : {{current_user.email}}</p>
                         {% endif %}

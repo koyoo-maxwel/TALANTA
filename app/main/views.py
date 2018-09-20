@@ -152,7 +152,7 @@ def new_talent(username):
     return render_template('new_video.html', user=user, form=form)
 
 
-@main.route('/user/<username>')
+@main.route('/user/<username>/')
 def profile(username):
     the_user = current_user.id
     user = User.query.filter_by(username=username).first()
@@ -168,17 +168,20 @@ def profile(username):
     return render_template("profile/profile.html", talents=talents)
 
 
-@main.route('/user/<username>/update/pic', methods=['POST'])
+
+@main.route('/profile/<username>/pic/upload',methods =["POST","GET"])
 @login_required
-def update_pic(uname):
-    user = User.query.filter_by(username=uname).first()
-    if 'photo' in request.files:
-        filename = photos.save(request.files['photo'])
-        path = f'photos/{filename}'
+def update_pic(username):
+
+    user = User.query.filter_by(username = username).first()
+
+    if 'photos' in request.files:
+        filename = photos.save(request.files['photos'])
+        path = f"photos/{filename}"
         user.profile_pic_path = path
         db.session.commit()
-    return redirect(url_for('main.profile', uname=uname))
 
+    return render_template("profile/upload.html",username=username)
 
 
 
@@ -192,12 +195,16 @@ def update_profile(username):
     form = UpdateProfile()
 
     if form.validate_on_submit():
+        # user = User(bio=form.bio.data, phone_number=form.phone_number.data, sex=form.sex.data)
         user.bio = form.bio.data
+        user.phone_number = form.phone_number.data
+        user.sex = form.sex.data
+        
 
         db.session.add(user)
         db.session.commit()
 
-        return redirect(url_for('.profile', username=user.username))
+        return redirect(url_for('.profile', username= username))
 
     return render_template('profile/update_profile.html', form=form)
 

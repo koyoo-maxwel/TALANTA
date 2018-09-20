@@ -8,9 +8,8 @@ class CommentsForm(FlaskForm):
 
 class UpdateProfile(FlaskForm):
     sex = SelectField('Gender',choices=[('Male','Male'),('Female','Female'),('Other','Other')])
-    phone_number  = StringField('Mobile e.g (+254) 722 333 444',validators = [Required()])
+    phone_number  = StringField('Mobile e.g (+254) 722 333 444')
     bio = TextAreaField('Tell us about you.',validators = [Required()])
-    video_file = FileField('Upload Profile Pic',validators = [Required()])
     submit = SubmitField('Update') 
 
 class TalentForm(FlaskForm):
