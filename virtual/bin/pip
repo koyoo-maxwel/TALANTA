@@ -1,4 +1,12 @@
+<<<<<<< HEAD
 #!/home/student/TALANTA/virtual/bin/python
+=======
+<<<<<<< HEAD
+#!/home/vicklyne/Talanta/TALANTA/virtual/bin/python
+=======
+#!/home/mutinda/Documents/python/Flask/TALANTA/virtual/bin/python
+>>>>>>> 52326021ff8133065f83937677cac4c319fb6f81
+>>>>>>> 57558397f6e0091e519752fd4bc17f4789344509
 
 # -*- coding: utf-8 -*-
 import re
