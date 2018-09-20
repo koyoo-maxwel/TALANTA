@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-#!/home/vicklyne/Talanta/TALANTA/virtual/bin/python
-=======
 #!/home/mutinda/Documents/python/Flask/TALANTA/virtual/bin/python
->>>>>>> 52326021ff8133065f83937677cac4c319fb6f81
 
 # -*- coding: utf-8 -*-
 import re

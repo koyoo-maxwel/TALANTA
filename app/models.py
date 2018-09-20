@@ -18,6 +18,7 @@ class User(UserMixin, db.Model):
     profile_pic_path = db.Column(db.String())
 
     vlogs = db.relationship('Talent', backref='user', lazy="dynamic")
+    comments = db.relationship('Comment', backref='user', lazy="dynamic")
 
     def __repr__(self):
         return f'User {self.username}'
@@ -95,6 +96,8 @@ class Comment (db.Model):
     id = db.Column(db.Integer, primary_key=True)
     comment = db.Column(db.String)
     talent_id = db.Column(db.Integer, db.ForeignKey("talents.id"))
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+
 
     def save_comment(self):
         db.session.add(self)

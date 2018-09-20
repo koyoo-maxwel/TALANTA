@@ -1,6 +1,6 @@
 import os
 import app
-from flask import render_template, request, redirect, url_for, abort
+from flask import render_template, request, redirect, url_for, abort ,flash
 from . import main
 from .forms import CommentsForm, UpdateProfile, TalentForm
 from ..models import Comment, Talent, User
@@ -154,12 +154,11 @@ def new_talent(username):
     return render_template('new_video.html', user=user, form=form)
 
 
-@main.route('/user/<username>/')
+@main.route('/user/<username>/',methods =["POST","GET"])
 def profile(username):
-    the_user = current_user.id
     user = User.query.filter_by(username=username).first()
 
-    talents = Talent.query.filter_by(user_id=the_user).all()
+    talents = Talent.query.filter_by(user_id=user.id).all()
     for talent in talents:
         print(talent.talent_video_path)
     # talents = User.vlogs
@@ -167,7 +166,7 @@ def profile(username):
     if user is None:
         abort(404)
 
-    return render_template("profile/profile.html", talents=talents)
+    return render_template("profile/profile.html",user=user, talents=talents)
 
 
 
@@ -215,14 +214,31 @@ def update_profile(username):
 '''
 Routing viewer to full video details
 '''
-@main.route('/video?<int:id>')
+@main.route('/video?<int:id>',methods=["post","get"])
 def show_video(id):
+    comment_form = CommentsForm()
+    if comment_form.validate_on_submit():
+        new_comment = Comment(comment = comment_form.comment.data ,user=current_user, talent_id = id)
+        new_comment.save_comment()
+
     video = Talent.query.filter_by(id=id).first()
 
     comments = Comment.query.filter_by(talent_id=id).all()
-    comment_form = CommentsForm()
 
-    # if validate_on_submit():
 
 
     return render_template('video.html',video=video,comments=comments,form=comment_form)
+
+
+'''
+A route to delete comments from a particular blog
+'''
+@main.route('/comment/delete/<int:id>')
+def delete_comment(id):
+
+    comment = Comment.query.filter_by(id=id).first()
+    talent = Talent.query.filter_by(id = comment.talent_id).first()
+    comment.delete_comment()
+    flash('Comment successfully deleted !')
+
+    return redirect(url_for('.show_video',id=talent.id))
