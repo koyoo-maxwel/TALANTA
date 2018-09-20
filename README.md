@@ -90,7 +90,7 @@ Open the browser on `http://localhost:5000/`
 ## Known bugs
 
 Sending batch emails bug
-If others are found, E-mail us [showcasetalanta@gmail.com](talanta)
+If others are found, E-mail us [showcasetalanta@gmail.com](showcasetalanta@gmail.com)
 
 ## Technologies used
 
@@ -103,7 +103,7 @@ If others are found, E-mail us [showcasetalanta@gmail.com](talanta)
 
 ## Support and contact details
 
-Contact talanta for any burgs to help us improve[support@talanta.co.ke](talanta) and make the app more interactive
+Contact talanta for any burgs to help us improve[showcasetalanta@gmail.com](showcasetalanta@gmail.com) and make the app more interactive
 
 ### License
 
